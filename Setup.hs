@@ -34,8 +34,8 @@ import Distribution.PackageDescription.Parse
 #if MIN_VERSION_Cabal(3,8,0)
 import Distribution.Simple.PackageDescription
 #endif
-#if MIN_VERSION_Cabal(3,14,0)
-import Distribution.Simple.PreProcess.Types (Suffix, mkSuffix)
+#if MIN_VERSION_Cabal(3,12,0)
+import Distribution.Simple.PreProcess.Types (Suffix(..))
 #endif
 
 import Foreign.CUDA.Path
@@ -109,8 +109,8 @@ main = defaultMainWithHooks customHooks
         , preUnreg            = readHook regVerbosity
         , postConf            = postConfHook
         , postBuild           = postBuildHook
-#if MIN_VERSION_Cabal(3,14,0)
-        , hookedPreProcessors = (mkSuffix "chs", pp_c2hs) : filter (\x -> fst x /= mkSuffix "chs") preprocessors
+#if MIN_VERSION_Cabal(3,12,0)
+        , hookedPreProcessors = (Suffix "chs", pp_c2hs) : filter (\x -> fst x /= Suffix "chs") preprocessors
 #else
         , hookedPreProcessors = ("chs", pp_c2hs) : filter (\x -> fst x /= "chs") preprocessors
 #endif
